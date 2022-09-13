@@ -13,6 +13,6 @@ describe('3 - Teste a função saveCartItems', () => {
   test('se o metodo setItem eh chamado com parametros', async() => {
     expect.assertions(1)
     await saveCartItems('MLB2772861416')
-    expect(localStorage.setItem).toBeCalledWith('cartItem', 'MLB2772861416')
+    expect(localStorage.setItem).toBeCalledWith('cartItems', 'MLB2772861416')
   })
 });
