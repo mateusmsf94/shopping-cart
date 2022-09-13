@@ -31,8 +31,8 @@ const createCustomElement = (element, className, innerText) => {
 };
 
 const cartItemClickListener = (e) => {
-  e.target.remove()
-}
+  e.target.remove();
+};
  
 /**
  * Função responsável por criar e retornar um item do carrinho.
