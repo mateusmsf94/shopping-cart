@@ -40,8 +40,8 @@ const subtotalCal = () => {
 };
 
 const cartItemClickListener = (e) => {
-  const id = e.target.innerText.split(' ')[1]
-  lista = lista.filter(el => !(el.id == id))
+  const id = e.target.innerText.split(' ')[1];
+  lista = lista.filter((el) => el.id !== id);
   saveCartItems(lista);
   e.target.remove();
   subtotalCal();
@@ -94,11 +94,9 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 };
 
 const carregando = () => {
-  const car = createCustomElement('p', 'loading', 'carregando...')
-  items.appendChild(car)
-}
-
-
+  const car = createCustomElement('p', 'loading', 'carregando...');
+  items.appendChild(car);
+};
 
 /**
  * Função que recupera o ID do produto passado como parâmetro.
@@ -108,13 +106,13 @@ const carregando = () => {
 // const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 const render = async () => {
-  carregando()
+  carregando();
   const data = await fetchProducts('computador');
   data.results.forEach((product) => {
     const prod = createProductItemElement(product);
     items.appendChild(prod);
   });
-  document.querySelector('.loading').remove()
+  document.querySelector('.loading').remove();
 };
 
 render();
