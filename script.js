@@ -93,6 +93,13 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
   return section;
 };
 
+const carregando = () => {
+  const car = createCustomElement('p', 'loading', 'carregando...')
+  items.appendChild(car)
+}
+
+
+
 /**
  * Função que recupera o ID do produto passado como parâmetro.
  * @param {Element} product - Elemento do produto.
@@ -101,11 +108,13 @@ const createProductItemElement = ({ id, title, thumbnail }) => {
 // const getIdFromProductItem = (product) => product.querySelector('span.id').innerText;
 
 const render = async () => {
+  carregando()
   const data = await fetchProducts('computador');
   data.results.forEach((product) => {
     const prod = createProductItemElement(product);
     items.appendChild(prod);
   });
+  document.querySelector('.loading').remove()
 };
 
 render();
