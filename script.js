@@ -31,9 +31,12 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+
 const cartItemClickListener = (e) => {
+  let i = lista.indexOf(e.target)
+  lista.splice(i, 1)
+  saveCartItems(lista)
   e.target.remove();
-  saveCartItems(cart.innerHTML)
 };
  
 /**
