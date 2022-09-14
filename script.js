@@ -4,6 +4,7 @@
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 const items = document.querySelector('.items');
 const cart = document.querySelector('.cart__items');
+const lista = getSavedCartItems() || []
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
  * @param {string} imageSource - URL da imagem.
@@ -32,6 +33,7 @@ const createCustomElement = (element, className, innerText) => {
 
 const cartItemClickListener = (e) => {
   e.target.remove();
+  saveCartItems(cart.innerHTML)
 };
  
 /**
@@ -54,6 +56,8 @@ const addToCart = async (item) => {
   const id = item.target.parentNode.firstChild.innerText;
   const itemCart = await fetchItem(id);
   cart.appendChild(createCartItemElement(itemCart));
+  lista.push(itemCart)
+  saveCartItems(lista)
 };
 
 /**
@@ -94,4 +98,11 @@ const render = async () => {
 
 render();
 
-// window.onload = () => { };
+const cartLoad = () =>{
+  lista.forEach(el => cart.appendChild(createCartItemElement(el)))
+
+}
+
+window.onload = () => {
+  cartLoad() 
+};
