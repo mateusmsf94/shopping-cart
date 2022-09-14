@@ -4,7 +4,9 @@
 // Fique a vontade para modificar o código já escrito e criar suas próprias funções!
 const items = document.querySelector('.items');
 const cart = document.querySelector('.cart__items');
-const lista = getSavedCartItems() || []
+const subtotal = document.querySelector('.total-price');
+let lista = getSavedCartItems() || [];
+const resetCartBtn = document.querySelector('.empty-cart');
 /**
  * Função responsável por criar e retornar o elemento de imagem do produto.
  * @param {string} imageSource - URL da imagem.
@@ -31,12 +33,18 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const subtotalCal = () => {
+  const total = lista.reduce((acc, curr) => acc + curr.price, 0).toFixed(2);
+  
+  subtotal.innerText = `Subtotal: R$${total}`;
+};
 
 const cartItemClickListener = (e) => {
-  let i = lista.indexOf(e.target)
-  lista.splice(i, 1)
-  saveCartItems(lista)
+  const i = lista.indexOf(e.target);
+  lista.splice(i, 1);
+  saveCartItems(lista);
   e.target.remove();
+  subtotalCal();
 };
  
 /**
@@ -59,8 +67,9 @@ const addToCart = async (item) => {
   const id = item.target.parentNode.firstChild.innerText;
   const itemCart = await fetchItem(id);
   cart.appendChild(createCartItemElement(itemCart));
-  lista.push(itemCart)
-  saveCartItems(lista)
+  lista.push(itemCart);
+  saveCartItems(lista);
+  subtotalCal();
 };
 
 /**
@@ -101,11 +110,18 @@ const render = async () => {
 
 render();
 
-const cartLoad = () =>{
-  lista.forEach(el => cart.appendChild(createCartItemElement(el)))
+resetCartBtn.addEventListener('click', () => {
+  cart.innerHTML = '';
+  lista = [];
+  saveCartItems(lista);
+  subtotalCal();
+});
 
-}
+const cartLoad = () => {
+  lista.forEach((el) => cart.appendChild(createCartItemElement(el)));
+  subtotalCal();
+};
 
 window.onload = () => {
-  cartLoad() 
+  cartLoad(); 
 };
