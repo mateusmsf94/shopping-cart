@@ -40,8 +40,8 @@ const subtotalCal = () => {
 };
 
 const cartItemClickListener = (e) => {
-  const i = lista.indexOf(e.target);
-  lista.splice(i, 1);
+  const id = e.target.innerText.split(' ')[1]
+  lista = lista.filter(el => !(el.id == id))
   saveCartItems(lista);
   e.target.remove();
   subtotalCal();
